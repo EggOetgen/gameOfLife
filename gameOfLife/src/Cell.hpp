@@ -9,7 +9,7 @@
 #pragma once
 
 
-#include "ofApp.h"
+#include "ofMain.h"
 
 class Cell {
 
@@ -18,7 +18,7 @@ public:
     void setup(float x_, float y_, float size_, int state_);
     void display();
     void savePrevious();
-   // bool checkNeighbors(int NW, int N, int NE, int W, int E, int SW, int S, int SE);
+    void checkState(int neighbors);
     
     
     //VARIABLES

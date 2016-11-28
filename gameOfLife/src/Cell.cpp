@@ -8,9 +8,9 @@
 
 #include "Cell.hpp"
 
-//Cell::Cell(){
+Cell::Cell(){
     
-//}
+}
 
 void Cell::setup(float x_, float y_, float size_, int state_)
     {
@@ -19,6 +19,7 @@ void Cell::setup(float x_, float y_, float size_, int state_)
         size     = size_;
         state    = state_;
         previous = state;
+        
     }
 
 void Cell::display()
@@ -34,5 +35,18 @@ void Cell::display()
 void Cell::savePrevious()
     {
         previous = state;
+    }
+
+void Cell::checkState(int neighbours)
+    {
+             if (state == 1 && neighbours < 2)
+                state = 0;
+        else if (state == 1 && neighbours > 3)
+                state = 0;
+        else if (state == 0 && neighbours == 3)
+                state = 1;
+        else
+            state = previous;
+        
     }
 

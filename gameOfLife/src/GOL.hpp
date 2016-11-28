@@ -8,7 +8,8 @@
 
 #pragma once
 
-#include "ofApp.h"
+#include "ofMain.h"
+#include "Cell.hpp"
 
 class GOL {
     
@@ -23,8 +24,14 @@ public:
     int cols;
     int rows;
     float width;
-  
+    
+   
+ 
+    vector<vector<Cell*>> grid;
+    
+
     
     GOL(float width_);
+private:
     
 };

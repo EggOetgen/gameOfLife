@@ -1,6 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
+#include "GOL.hpp"
+#include "Cell.hpp"
+
 
 class ofApp : public ofBaseApp{
 	public:
@@ -19,4 +22,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+    
+    GOL gol;
+    
 };

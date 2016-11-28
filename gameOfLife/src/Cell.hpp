@@ -18,7 +18,8 @@ public:
     void setup(float x_, float y_, float size_, int state_);
     void display();
     void savePrevious();
-    void checkState(int neighbors);
+    void checkState(int neighbors, int hunters);
+    void god(int mouseX, int mouseY);
     
     
     //VARIABLES
@@ -27,6 +28,10 @@ public:
     float size;
     int state;
     int previous;
+    
+    ofColor alive;
+    ofColor dead;
+    ofColor prevColor;
     
 
     Cell();

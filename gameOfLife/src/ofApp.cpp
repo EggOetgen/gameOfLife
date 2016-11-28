@@ -4,11 +4,11 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    ofSetFrameRate(24);
-    ofSetWindowShape(600, 600);
+   // ofSetFrameRate(10);
+    ofSetWindowShape(900, 900);
     
    
-    width = 1;
+    width = 20;
     gol.setup(width);
     }
 
@@ -22,12 +22,13 @@ void ofApp::update(){
 void ofApp::draw(){
 
     gol.display();
-   
+    cout << gol.cols << endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 
+    gol.init();
 }
 
 //--------------------------------------------------------------
@@ -42,12 +43,13 @@ void ofApp::mouseMoved(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    gol.addCell(x, y);
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 
+    gol.addCell(x, y);
 }
 
 //--------------------------------------------------------------

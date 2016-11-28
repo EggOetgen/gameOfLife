@@ -32,25 +32,7 @@ void GOL::setup(int width_)
 void GOL::init()
     {
         
-      /*  for (int i = 0; i < rows; rows++)
-        {
-            vector<Cell>  tempRow;
-            tempRow.assign(cols, Cell());
-            grid.push_back(tempRow);
-        }*/
-        
-       /* for(int i = 0; i < grid.size(); i ++)
-        {
-            for (int j = 0; j < grid[i].size(); j++)
-            {
-                
-                int state = (int)ofRandom(2);
-                Cell newCell;
-                newCell.setup(j * width, i * width, width, state);
-                grid[i][j]=newCell;
-                
-                
-            }*/
+     
 
         grid.resize(rows);
         for(int i = 0; i < rows; i ++)
@@ -84,17 +66,23 @@ void GOL::generate()
                 grid[x][y].savePrevious();
                 
                 int neighbors = 0;
+                int hunters = 0;
                 for(int i = -1; i <=1; i++)
                 {
                     for(int j = -1; j <=1; j++)
                     {
-                        neighbors += grid[(x+i+cols)%cols][(y+j+rows)%rows].previous;
+                        if( grid[(x+i+cols)%cols][(y+j+rows)%rows].previous <= 1)
+                        {
+                            neighbors += grid[(x+i+cols)%cols][(y+j+rows)%rows].previous;
+                        }else {
+                            hunters += grid[(x+i+cols)%cols][(y+j+rows)%rows].previous;
+                        }
                     }
                 }
                 
                 neighbors -= grid[x][y].previous;
                 
-                grid[x][y].checkState(neighbors);
+                grid[x][y].checkState(neighbors, hunters);
             }
         }
     }
@@ -114,6 +102,19 @@ void GOL::display()
 
 
 
+
+
+void GOL::addCell(int mouseX, int mouseY)
+{
+    for(int i = 0; i < grid.size(); i++)
+    {
+        for(int j = 0; j < grid[i].size(); j++)
+        {
+            grid[i][j].god(mouseX, mouseY);
+        }
+    }
+    
+}
 
 
 

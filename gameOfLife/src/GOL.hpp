@@ -19,6 +19,7 @@ public:
     void init();
     void generate();
     void display();
+    void addCell(int x, int y);
     
     //VARIABLES
     int cols;

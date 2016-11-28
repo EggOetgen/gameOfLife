@@ -15,7 +15,7 @@ class GOL {
     
 public:
     //METHOD;
-    void setup();
+    void setup(int width_);
     void init();
     void generate();
     void display();
@@ -23,15 +23,18 @@ public:
     //VARIABLES
     int cols;
     int rows;
-    float width;
+    int width;
+   
+
+    
     
    
  
-    vector<vector<Cell*>> grid;
+    vector<vector<Cell>> grid;
     
 
     
-    GOL(float width_);
+    GOL();
 private:
     
 };

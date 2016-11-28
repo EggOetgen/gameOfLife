@@ -1,10 +1,16 @@
 #include "ofApp.h"
 
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    gol.setup();
-}
+    ofSetFrameRate(24);
+    ofSetWindowShape(600, 600);
+    
+   
+    width = 1;
+    gol.setup(width);
+    }
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -16,6 +22,7 @@ void ofApp::update(){
 void ofApp::draw(){
 
     gol.display();
+   
 }
 
 //--------------------------------------------------------------

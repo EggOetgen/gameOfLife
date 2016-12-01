@@ -105,10 +105,10 @@ void GOL::display()
 
 
 void GOL::addCell(int mouseX, int mouseY)
-{
-    for(int i = 0; i < grid.size(); i++)
     {
-        for(int j = 0; j < grid[i].size(); j++)
+        for(int i = 0; i < grid.size(); i++)
+        {
+            for(int j = 0; j < grid[i].size(); j++)
         {
             grid[i][j].god(mouseX, mouseY);
         }
@@ -116,7 +116,10 @@ void GOL::addCell(int mouseX, int mouseY)
     
 }
 
+void GOL::cycle()
+    {
 
+    }
 
 
 

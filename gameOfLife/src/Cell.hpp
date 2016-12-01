@@ -25,7 +25,7 @@ public:
     //VARIABLES
     float x;
     float y;
-    float size;
+    int size;
     int state;
     int previous;
     

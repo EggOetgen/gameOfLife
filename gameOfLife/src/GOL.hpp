@@ -20,6 +20,7 @@ public:
     void generate();
     void display();
     void addCell(int x, int y);
+    void cycle();
     
     //VARIABLES
     int cols;

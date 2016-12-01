@@ -5,10 +5,10 @@
 void ofApp::setup(){
 
    // ofSetFrameRate(10);
-    ofSetWindowShape(900, 900);
+    ofSetWindowShape(600, 600);
     
    
-    width = 20;
+    width = 1;
     gol.setup(width);
     }
 
@@ -27,8 +27,15 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if(key == ' '){
     gol.init();
+    }else {
+        int x = ofRandom(gol.cols);
+        int y = ofRandom(gol.rows);
+        virus newVirus;
+        newVirus.setup();
+        gol.grid[x][y] = newVirus;
+    }
 }
 
 //--------------------------------------------------------------

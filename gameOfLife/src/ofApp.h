@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "GOL.hpp"
 #include "Cell.hpp"
-
+#include "virus.hpp"
 
 class ofApp : public ofBaseApp{
 	public:

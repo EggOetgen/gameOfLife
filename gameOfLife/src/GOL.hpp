@@ -10,6 +10,8 @@
 
 #include "ofMain.h"
 #include "Cell.hpp"
+#include "virusCell.hpp"
+#include "virusBody.hpp"
 
 class GOL {
     
@@ -30,9 +32,10 @@ public:
 
     
     
-   
+    virusBody test;
  
-    vector<vector<Cell*>> grid;
+    vector<vector<Cell*>> cellGrid;
+    
     
 
     

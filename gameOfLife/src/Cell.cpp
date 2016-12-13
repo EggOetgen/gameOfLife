@@ -20,7 +20,6 @@ void Cell::setup(float x_, float y_, float size_, int state_)
         state    = state_;
         previous = state;
         
-        alive = (255);
         dead.r=255;
         dead.g = 0;
         dead.b=1;

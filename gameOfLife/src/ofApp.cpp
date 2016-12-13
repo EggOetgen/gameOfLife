@@ -8,21 +8,25 @@ void ofApp::setup(){
    // ofSetWindowShape(600, 600);
     ofSetBackgroundColor(25);
    
-    width = 1;
+    width = 10;
     gol.setup(width);
+    
+    
     }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+  
     gol.generate();
+   
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
     gol.display();
-    cout << gol.cols << endl;
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -30,11 +34,12 @@ void ofApp::keyPressed(int key){
     if(key == ' '){
     gol.init();
     }else {
+        
         int x = ofRandom(gol.cols);
         int y = ofRandom(gol.rows);
     //    virus newVirus;
       //  newVirus.setup();
-        gol.grid[x][y]->state = 2;
+        gol.cellGrid[x][y]->state = 2;
     }
 }
 

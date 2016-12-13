@@ -34,36 +34,37 @@ void GOL::init()
         
      
 
-        grid.resize(rows);
+        cellGrid.resize(rows);
         for(int i = 0; i < rows; i ++)
         {
-            grid[i].resize(cols);
+            cellGrid[i].resize(cols);
         }
         
-        for(int i = 0; i < grid.size(); i ++)
+        for(int i = 0; i < cellGrid.size(); i ++)
         {
-            for (int j = 0; j < grid[i].size(); j++)
+            for (int j = 0; j < cellGrid[i].size(); j++)
             {
                 
                  int state = (int)ofRandom(2);
                 Cell * newCell = new Cell;
                 newCell->setup(i * width, j * width, width, state);
-                grid[i][j] = newCell;
+                cellGrid[i][j] = newCell;
                 
                 
             }
         }
+        test.setup(300,300);
     }
 
     
 
 void GOL::generate()
     {
-        for(int x = 0; x < grid.size(); x++)
+        for(int x = 0; x < cellGrid.size(); x++)
         {
-            for(int y = 0; y < grid[x].size(); y++)
+            for(int y = 0; y < cellGrid[x].size(); y++)
             {
-                grid[x][y]->savePrevious();
+                cellGrid[x][y]->savePrevious();
                 
                 int neighbors = 0;
                 int hunters = 0;
@@ -71,32 +72,34 @@ void GOL::generate()
                 {
                     for(int j = -1; j <=1; j++)
                     {
-                        if( grid[(x+i+cols)%cols][(y+j+rows)%rows]->previous <= 1)
+                        if( cellGrid[(x+i+cols)%cols][(y+j+rows)%rows]->previous <= 1)
                         {
-                            neighbors += grid[(x+i+cols)%cols][(y+j+rows)%rows]->previous;
+                            neighbors += cellGrid[(x+i+cols)%cols][(y+j+rows)%rows]->previous;
                         }else {
-                            hunters += grid[(x+i+cols)%cols][(y+j+rows)%rows]->previous;
+                            hunters += cellGrid[(x+i+cols)%cols][(y+j+rows)%rows]->previous;
                         }
                     }
                 }
                 
-                neighbors -= grid[x][y]->previous;
+                neighbors -= cellGrid[x][y]->previous;
                 
-                grid[x][y]->checkState(neighbors, hunters);
+                cellGrid[x][y]->checkState(neighbors, hunters);
             }
         }
+          test.grow();
     }
 
 void GOL::display()
     {
         
-        for(int i = 0; i < grid.size(); i++)
+        for(int i = 0; i < cellGrid.size(); i++)
         {
-            for(int j = 0; j < grid[i].size(); j++)
+            for(int j = 0; j < cellGrid[i].size(); j++)
             {
-                grid[i][j]->display();
+                cellGrid[i][j]->display();
             }
         }
+        test.display();
 
     }
 
@@ -106,11 +109,11 @@ void GOL::display()
 
 void GOL::addCell(int mouseX, int mouseY)
     {
-        for(int i = 0; i < grid.size(); i++)
+        for(int i = 0; i < cellGrid.size(); i++)
         {
-            for(int j = 0; j < grid[i].size(); j++)
+            for(int j = 0; j < cellGrid[i].size(); j++)
         {
-            grid[i][j]->god(mouseX, mouseY);
+            cellGrid[i][j]->god(mouseX, mouseY);
         }
     }
     

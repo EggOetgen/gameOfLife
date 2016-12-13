@@ -4,7 +4,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-   // ofSetFrameRate(10);
+    ofSetFrameRate(60);
     ofSetWindowShape(600, 600);
     
    

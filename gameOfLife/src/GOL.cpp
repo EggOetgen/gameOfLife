@@ -46,8 +46,8 @@ void GOL::init()
             {
                 
                  int state = (int)ofRandom(2);
-                Cell newCell;
-                newCell.setup(i * width, j * width, width, state);
+                Cell * newCell = new Cell;
+                newCell->setup(i * width, j * width, width, state);
                 grid[i][j] = newCell;
                 
                 
@@ -63,7 +63,7 @@ void GOL::generate()
         {
             for(int y = 0; y < grid[x].size(); y++)
             {
-                grid[x][y].savePrevious();
+                grid[x][y]->savePrevious();
                 
                 int neighbors = 0;
                 int hunters = 0;
@@ -71,18 +71,18 @@ void GOL::generate()
                 {
                     for(int j = -1; j <=1; j++)
                     {
-                        if( grid[(x+i+cols)%cols][(y+j+rows)%rows].previous <= 1)
+                        if( grid[(x+i+cols)%cols][(y+j+rows)%rows]->previous <= 1)
                         {
-                            neighbors += grid[(x+i+cols)%cols][(y+j+rows)%rows].previous;
+                            neighbors += grid[(x+i+cols)%cols][(y+j+rows)%rows]->previous;
                         }else {
-                            hunters += grid[(x+i+cols)%cols][(y+j+rows)%rows].previous;
+                            hunters += grid[(x+i+cols)%cols][(y+j+rows)%rows]->previous;
                         }
                     }
                 }
                 
-                neighbors -= grid[x][y].previous;
+                neighbors -= grid[x][y]->previous;
                 
-                grid[x][y].checkState(neighbors, hunters);
+                grid[x][y]->checkState(neighbors, hunters);
             }
         }
     }
@@ -94,7 +94,7 @@ void GOL::display()
         {
             for(int j = 0; j < grid[i].size(); j++)
             {
-                grid[i][j].display();
+                grid[i][j]->display();
             }
         }
 
@@ -110,7 +110,7 @@ void GOL::addCell(int mouseX, int mouseY)
         {
             for(int j = 0; j < grid[i].size(); j++)
         {
-            grid[i][j].god(mouseX, mouseY);
+            grid[i][j]->god(mouseX, mouseY);
         }
     }
     

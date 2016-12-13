@@ -32,7 +32,7 @@ public:
     
    
  
-    vector<vector<Cell>> grid;
+    vector<vector<Cell*>> grid;
     
 
     

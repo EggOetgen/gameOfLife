@@ -29,11 +29,12 @@ void Cell::setup(float x_, float y_, float size_, int state_)
 
 void Cell::display()
     {
-        if      (state == 0)
-                    ofSetColor(25);
-        else if (state ==1)
+      if (state ==1)
+      {
                     ofSetColor(0);
         
+        ofDrawRectangle(x, y, size, size);
+      }
         else if (state ==2){
             
             if(dead.r > 100)
@@ -41,10 +42,11 @@ void Cell::display()
            
            dead.b = (dead.b *= 10)%255;
              ofSetColor(dead);
+            
+            ofDrawRectangle(x, y, size, size);
         }
        
-        
-        ofDrawRectangle(x, y, size, size);
+      
        
     }
 

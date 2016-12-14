@@ -26,7 +26,11 @@ void GOL::setup(int width_)
         cols = ofGetWidth()/width_;
         rows = ofGetWidth()/width_;
         width = width_;
+        
+            startPos.set(300,300);
+        
         init();
+    
     }
 
 void GOL::init()
@@ -45,7 +49,7 @@ void GOL::init()
             for (int j = 0; j < cellGrid[i].size(); j++)
             {
                 
-                 int state = (int)ofRandom(2);
+                int state = (int)ofRandom(2);
                 Cell * newCell = new Cell;
                 newCell->setup(i * width, j * width, width, state);
                 cellGrid[i][j] = newCell;
@@ -53,7 +57,8 @@ void GOL::init()
                 
             }
         }
-        test.setup(300,300);
+        
+        test.setup(startPos, cols);
     }
 
     

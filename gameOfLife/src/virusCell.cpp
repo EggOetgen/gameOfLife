@@ -8,12 +8,11 @@
 
 #include "virusCell.hpp"
 
-void virusCell::setup(float x_, float y_, float size_, int state_, int id)
+void virusCell::setup(ofVec2f pos_, float size_, int state_, int id)
 {
-    x        = x_;
-    y        = y_;
-    size     = size_;
-    state    = state_;
+    pos     = pos_;
+    size    = size_;
+    state   = state_;
 
     dead.g=255;
     dead.r = 0;
@@ -32,7 +31,7 @@ void virusCell::display()
 
     
     
-        ofDrawRectangle(x, y, size, size);
+        ofDrawRectangle(pos.x, pos.y, size, size);
     
     
 }

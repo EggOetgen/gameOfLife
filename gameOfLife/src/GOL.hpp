@@ -29,10 +29,11 @@ public:
     int rows;
     int width;
    
-
+    
     
     
     virusBody test;
+    ofVec2f startPos;
  
     vector<vector<Cell*>> cellGrid;
     

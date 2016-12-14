@@ -8,17 +8,21 @@
 
 #include "virusBody.hpp"
 
-void virusBody::setup(int initX, int initY)
+void virusBody::setup(ofVec2f initPos, int spaces_)
     {
-        addCell(initX, initY);
+        spaces = spaces_;
+        cellSize = 10;
+        initID = 0;
+        addCell(initPos);
     }
 
-void virusBody::addCell(int x, int y)
+void virusBody::addCell(ofVec2f pos)
     {
         
         virusCell * newPart = new virusCell();
-        newPart->setup(x, y, cellSize, 1, initID);
+        newPart->setup(pos, cellSize, 1, initID);
         parts.push_back(newPart);
+        positions.push_back(pos);
         initID++;
         
     }
@@ -33,14 +37,36 @@ void virusBody::display()
 void virusBody::grow()
     {
         length = parts.size();
-       
-          int newX = parts[length - 1]->x + ((int)ofRandom(-2, 2) * 10);
-          int newY = parts[length - 1]->y +((int)ofRandom(-2,2) * 10);
-        cout << newX << " " << newY << endl;
-        addCell( newX, newY);
+        bool empty = true;
         
-        for ( int i = 0; i < length; i ++){
-            parts[i]->state = ofMap(initID, 0, parts.size(), 0, 1);
-        }
+   
+        ofVec2f newPos = calculateNewPos(parts[length-1]->pos);
         
+       /* for (int i = 0; i < positions.size(); i++) {
+            if (newPos == positions[i]) {
+                empty = false;
+            }
+        }*/
+      //  if (empty) {
+            
+        addCell( newPos);
+      //  }
     }
+
+ofVec2f virusBody::calculateNewPos( const ofVec2f & prevPos)
+    {
+        int newX = prevPos.x + ((int)ofRandom(-2, 2) * cellSize);
+        int newY = prevPos.y + ((int)ofRandom(-2, 2) * cellSize);
+
+        newX = (newX+600)%600;
+        newY = (newY+600)%600;
+        
+        ofVec2f newPos(newX, newY);
+        return newPos;
+    }
+
+
+
+
+
+

@@ -14,15 +14,15 @@
 class virusCell
     {
     public:
-        void setup(float x_, float y_, float size_, int state_, int id);
+        void setup(ofVec2f pos_, float size_, int state_, int id);
         void display();
         void calculate();
       //  void checkState(int neighbors, int hunters);
         
         ofColor dead;
         
-        float x;
-        float y;
+        ofVec2f pos;
+        
         int size;
         float state;
         int id;

@@ -15,15 +15,18 @@ class virusBody
 {
     public:
     
-        void setup(int x, int y);
-        void addCell(int x, int y);
+        void setup(ofVec2f initPos, int spaces_);
+        void addCell(ofVec2f pos);
         void display();
         void grow();
+        ofVec2f calculateNewPos(const ofVec2f & prevPos);
    
     vector<virusCell *> parts;
+    vector<ofVec2f> positions;
     
     
     int length;
-    int cellSize = 10;
-    int initID = 0;
+    int cellSize;
+    int initID;
+    int spaces;
 };

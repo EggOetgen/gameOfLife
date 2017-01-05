@@ -17,6 +17,7 @@ class virusCell
         void setup(ofVec2f pos_, float size_, int state_, int id);
         void display();
         void calculate();
+        void aging();
       //  void checkState(int neighbors, int hunters);
         
         ofColor dead;
@@ -27,7 +28,7 @@ class virusCell
         float state;
         int id;
         
-       
-        
+        int birth;
+        int age;
         
     };

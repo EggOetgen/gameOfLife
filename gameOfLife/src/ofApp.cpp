@@ -8,8 +8,9 @@ void ofApp::setup(){
    // ofSetWindowShape(600, 600);
     ofSetBackgroundColor(25);
    
-    width = 10;
+    width = 1;
     gol.setup(width);
+    
     
     
     }
@@ -37,8 +38,8 @@ void ofApp::keyPressed(int key){
         
         int x = ofRandom(gol.cols);
         int y = ofRandom(gol.rows);
-    //    virus newVirus;
-      //  newVirus.setup();
+        //virus newVirus;
+        //newVirus.setup();
         gol.cellGrid[x][y]->state = 2;
     }
 }

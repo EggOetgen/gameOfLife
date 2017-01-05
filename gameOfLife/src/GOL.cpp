@@ -58,7 +58,7 @@ void GOL::init()
             }
         }
         
-        test.setup(startPos, cols);
+        test.setup(startPos, cols, width, cols, rows);
     }
 
     

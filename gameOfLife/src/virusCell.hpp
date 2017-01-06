@@ -18,9 +18,10 @@ class virusCell
         void display();
         void calculate();
         void aging();
+        void feed();
       //  void checkState(int neighbors, int hunters);
         
-        ofColor dead;
+        ofFloatColor dead;
         
         ofVec2f pos;
         

@@ -30,9 +30,9 @@ void Cell::display()
     {
       if (state ==1)
       {
-                    ofSetColor(0);
+                    //ofSetColor(0);
         
-        ofDrawRectangle(x, y, size, size);
+       // ofDrawRectangle(x, y, size, size);
       }
         else if (state ==2){
             

@@ -14,9 +14,9 @@ void virusCell::setup(ofVec2f pos_, float size_, int state_, int id)
     size    = size_;
     state   = state_;
 
-    dead.g=255;
+    dead.g=1;
     dead.r = 0;
-    dead.b=1;
+    dead.b=0;
     birth = ofGetElapsedTimef();
     
 }
@@ -25,7 +25,9 @@ void virusCell::setup(ofVec2f pos_, float size_, int state_, int id)
 void virusCell::display()
 {
    
-        dead.g = ofMap(state, 0, 1, 0, 255);
+    dead.g = state;//ofMap(state, 0, 1, 0, 255);
+       // dead.b = ofMap(state, 0, 1, 255, 0);
+    
         
       //  dead.b = (dead.b *= 10)%255;
         ofSetColor(dead);
@@ -44,11 +46,14 @@ void virusCell::aging()
     
     age = curTime - birth;
    // if (age >= 50){
-        state *= 0.9;
-    if (state <=0.4) {
+   
+    state *= 0.99;
+    if (state <=0.1) {
         state = 0;
     }
-    
-        
+}
 
+void virusCell::feed()
+{
+    state = 1;
 }

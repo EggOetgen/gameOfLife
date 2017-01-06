@@ -18,10 +18,11 @@ class virusBody
         void setup(ofVec2f initPos, int spaces_, int cellSize_, int cols_,int rows_);
         void addCell(ofVec2f  pos);
         void display();
-        void grow();
-        ofVec2f calculateNewPos(ofVec2f oldPos);
+        void grow(  vector<vector<Cell*>> cellGrid);
+        ofVec2f calculateNewPos(int x, int y);
+        void eat(vector<vector<Cell*>> cellGrid);
+        void hunt(int x, int y, vector<vector<Cell*>> cellGrid);
     
-   
     vector<virusCell *> parts;
     vector<ofVec2f > positions;
     vector<ofVec2f> newPositions;

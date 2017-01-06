@@ -15,13 +15,13 @@ void virusBody::setup(ofVec2f initPos, int spaces_, int cellSize_,int cols_,int 
         cols = cols_;
         rows = rows_;
         initID = 0;
-        for (int i = 0; i < 360; i ++){
-            int x = sin(ofDegToRad(i)) * 20+300;
-            int y = cos(ofDegToRad(i)) * 20+300;
-            ofVec2f p(x,y);
-        addCell(p);
+       // for (int i = 0; i < 360; i ++){
+         //   int x = sin(ofDegToRad(i)) * 20+300;
+           // int y = cos(ofDegToRad(i)) * 20+300;
+            //ofVec2f p(x,y);
+        addCell(initPos);
         
-        }
+      //  }
         
     }
 
@@ -43,18 +43,14 @@ void virusBody::display()
         }
     }
 
-void virusBody::grow()
+void virusBody::grow( vector<vector<Cell*>> cellGrid)
     {
         length = parts.size();
         bool empty = true;
         for (int i = 0; i < parts.size(); i++) {
             parts[i]->aging();
-          //  if (parts[i]->state ==0){
-            //    delete parts[i];
-       //        parts.erase;
-            //}
-        }
-        
+                 }
+       eat(cellGrid);
         vector<virusCell *>::iterator it;
         for ( it = parts.begin(); it != parts.end(); )
             if( (*it)->state ==0 ){
@@ -69,62 +65,117 @@ void virusBody::grow()
        // ofVec2f newPos = calculateNewPos();
        // int select = ofRandom(positions.size());
      //   addCell( calculateNewPos(positions[select]));
-        for(int i = 0; i < 180; i++){
-            int select = ofRandom(positions.size());
-            addCell( calculateNewPos(positions[select]));
+     
+        
+      /*  for(int i = 0; i < 90; i++){
+            int select = ofRandom( parts.size());
+           addCell( calculateNewPos(parts[select]->pos.x, parts[select]->pos.y));
         }
         
-        
+        */
     }
 
 
-/*ofVec2f virusBody::calculateNewPos( const ofVec2f & prevPos)
-    {
-        int newX = prevPos.x + ((int)ofRandom(-2, 2) * cellSize);
-        int newY = prevPos.y + ((int)ofRandom(-2, 2) * cellSize);
-
-        newX = (newX+600)%600;
-        newY = (newY+600)%600;
-        
-        ofVec2f newPos(newX, newY);
-        return newPos;
-    }
-*/
-ofVec2f virusBody::calculateNewPos(ofVec2f oldPos)
+ofVec2f virusBody::calculateNewPos(int x, int y  )
 {
     newPositions.clear();
       bool empty;
-   // int memory = (int)positions.size()/2;
- //  for (int k = 0; k < positions.size(); k+=10) {
+    float state;
+  
     for(int i = -1; i <=1; i++)
         {
             for(int j = -1; j <=1; j++)
                 {
-                    int newX = ((int)oldPos.x + i);// + cols)%cols;
-                    int newY = ((int)oldPos.y + j);// + rows)%rows;
-                    cout << newX << " " << newY << endl;
-                     for (int l = 0; l < positions.size(); l++) {
-                    if(newX == positions[l].x && newY == positions[l].y)
+                    int newX = (x + i + cols)%cols;
+                    int newY = (y + j + rows)%rows;
+                                       for (int l = 0; l < parts.size(); l++) {
+                    if( newX == parts[l]->pos.x && newY == parts[l]->pos.y )
                          empty = false;
-                      else
+                    else{
                          empty = true;
+                       
+                                                             }
                      }
-                         if (empty == true){
+                         if (empty == true  ){
                             ofVec2f newPos(newX, newY);
                             newPositions.push_back(newPos);
-                                                                 }
+                             
+                             
                 }
         }
-  // }
-   
+        }
+    ofVec2f g(0,0);
+    int slect = 0;
+    float distance ;
+    float gDist = 0;
+    float sDist = 0;
+    for (int i = 0; i < newPositions.size(); i ++){
+        distance = 0;
+        for (int l = 0; l < parts.size(); l ++) {
+            distance += newPositions[i].distance(g);
+        }
+      //  if(parts.size() >=1200){
+        if(distance < gDist ){
+            gDist = distance;
+            slect = i;
+       // }
+        }
+      //  else{
+        //    slect = ofRandom(newPositions.size());
+        //}
+        }
     
-   // newPositions.push_back(potPos);
-    int select = ofRandom(newPositions.size());
-    
-       return newPositions[select];
+      //int select = ofRandom(newPositions.size());
+    cout << parts.size() << endl;
+       return newPositions[slect];
      newPositions.clear();
    
     }
+
+
+
+void virusBody::eat( vector<vector<Cell*>> cellGrid )
+{
+     for (int i = 0; i < parts.size(); i++) {
+         int x =parts[i]->pos.x;
+         int y =parts[i]->pos.y;
+
+         if (cellGrid[x][y]->state ==1 ) {
+             float r = ofRandom(1);
+            
+             parts[i]->feed();
+           //   if( r < 0.1){
+         //    addCell( calculateNewPos(x, y));
+          //   }
+         }else if (cellGrid[x][y]->state ==2 ) {
+            // hunt(x,y,cellGrid);
+             parts[i]->feed();
+
+         }
+     }
+}
+
+void virusBody::hunt(int x, int y,vector<vector<Cell *> > cellGrid){
+
+
+    for(int i = -1; i <=1; i++)
+    {
+        for(int j = -1; j <=1; j++)
+        {
+         //   for(int p = 0; p < parts.size(); p++){
+            if(cellGrid[(x+i+cols)%cols][(y+j+rows)%rows]->state ==2 ){
+                addCell(ofVec2f((x+i+cols)%cols,(y+j+rows)%rows));
+                
+                cout << "hunted";
+         //   }
+            }
+
+
+
+}
+    }
+}
+
 
 
 

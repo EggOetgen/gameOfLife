@@ -91,7 +91,7 @@ void GOL::generate()
                 cellGrid[x][y]->checkState(neighbors, hunters);
             }
         }
-          test.grow();
+          test.grow(  cellGrid);
     }
 
 void GOL::display()

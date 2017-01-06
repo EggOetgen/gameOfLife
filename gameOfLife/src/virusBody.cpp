@@ -8,9 +8,10 @@
 
 #include "virusBody.hpp"
 
-void virusBody::setup(ofVec2f initPos, int spaces_, int cellSize_,int cols_,int rows_)
+void virusBody::setup( int cellSize_,int cols_,int rows_, int id)
     {
-        spaces = spaces_;
+        
+       // spaces = spaces_;
         cellSize = cellSize_;
         cols = cols_;
         rows = rows_;
@@ -19,43 +20,101 @@ void virusBody::setup(ofVec2f initPos, int spaces_, int cellSize_,int cols_,int 
          //   int x = sin(ofDegToRad(i)) * 20+300;
            // int y = cos(ofDegToRad(i)) * 20+300;
             //ofVec2f p(x,y);
-        addCell(initPos);
+        //addCell(initPos);
         
       //  }
+        infected = false;
+        init();
         
     }
 
-void virusBody::addCell(ofVec2f pos)
+void virusBody::init(){
+    
+    parts.resize(rows);
+    for(int i = 0; i < rows; i ++)
+    {
+        parts[i].resize(cols);
+        
+    }
+    
+    for(int i = 0; i < parts.size(); i ++)
+    {
+        for (int j = 0; j < parts[i].size(); j++)
+        {
+            
+            int state = 0;
+            virusCell * newVirusCell = new virusCell;
+            newVirusCell->setup(ofVec2f(i * cellSize, j *  cellSize), cellSize, state, 0);
+            parts[i][j] = newVirusCell;
+            
+            
+            
+            
+        }
+    }
+    for (int i = 0; i < 360; i ++){
+        int x = sin(ofDegToRad(i)) * 20+300;
+        int y = cos(ofDegToRad(i)) * 20+300;
+        
+        parts[x][y]->state = 1;
+    }
+
+    
+
+}
+
+void virusBody::addCell(int x, int y)
     {
         
-        virusCell * newPart = new virusCell();
-        newPart->setup(pos, cellSize, 1, initID);
+        parts[x][y]->state = 1;
+        /*virusCell * newPart = new virusCell();
+        newPart->setup(pos, cellSize, 1, id);
         parts.push_back(newPart);
         positions.push_back(pos);
-        initID++;
+        initID++;*/
         
     }
 
 void virusBody::display()
     {
         for (int i = 0; i < parts.size(); i++) {
-            parts[i]->display();
+            for (int j = 0; j < parts[i].size(); j++) {
+
+            parts[i][j]->display();
+            }
         }
     }
 
-void virusBody::grow( vector<vector<Cell*>> cellGrid)
+void virusBody::grow( )
     {
         length = parts.size();
         bool empty = true;
-        for (int i = 0; i < parts.size(); i++) {
-            parts[i]->aging();
-                 }
-       eat(cellGrid);
-        vector<virusCell *>::iterator it;
-        for ( it = parts.begin(); it != parts.end(); )
-            if( (*it)->state ==0 ){
+        for (int i = 0; i < positions.size(); i++) {
+          
+
+            parts[positions[i]->x][positions[i]->y]->aging();
+        
+            }
+     vector< vector<virusCell *> >::iterator row;
+        vector<virusCell *>::iterator col;
+        for (row = parts.begin(); row != parts.end(); row++) {
+            for (col = row->begin(); col != row->end(); ) {
+                if( (*col)->state ==0.1 ){
+                    delete * col;
+                    col = row->erase(col);
+                }
+                else {
+                    ++col;
+                }
+
+            }
+        }
+    //   eat(cellGrid);
+        vector<ofVec2f *>::iterator it;
+        for ( it = positions.begin(); it != positions.end(); )
+            if( parts[(*it)->x][(*it)->y]->state ==0 ){
                 delete * it;
-                it = parts.erase(it);
+                it = positions.erase(it);
         }
         else {
                 ++it;
@@ -67,22 +126,22 @@ void virusBody::grow( vector<vector<Cell*>> cellGrid)
      //   addCell( calculateNewPos(positions[select]));
      
         
-      /*  for(int i = 0; i < 90; i++){
+        //for(int i = 0; i < 90; i++){
             int select = ofRandom( parts.size());
-           addCell( calculateNewPos(parts[select]->pos.x, parts[select]->pos.y));
-        }
+          // addCell( calculateNewPos(cell));
+        //}
         
-        */
+        
     }
 
 
-ofVec2f virusBody::calculateNewPos(int x, int y  )
+ofVec2f virusBody::calculateNewPos(Cell * cell  )
 {
     newPositions.clear();
       bool empty;
     float state;
   
-    for(int i = -1; i <=1; i++)
+   /* for(int i = -1; i <=1; i++)
         {
             for(int j = -1; j <=1; j++)
                 {
@@ -123,36 +182,40 @@ ofVec2f virusBody::calculateNewPos(int x, int y  )
       //  else{
         //    slect = ofRandom(newPositions.size());
         //}
-        }
+        }*/
     
       //int select = ofRandom(newPositions.size());
+    if(cell->state ==1){
+        ofVec2f newCell(cell->x, cell->y);
+         return newCell;
+    }
     cout << parts.size() << endl;
-       return newPositions[slect];
+       return ofVec2f(id,id);
      newPositions.clear();
    
     }
 
 
 
-void virusBody::eat( vector<vector<Cell*>> cellGrid )
+void virusBody::eat( Cell * cell )
 {
-     for (int i = 0; i < parts.size(); i++) {
+    /* for (int i = 0; i < parts.size(); i++) {
          int x =parts[i]->pos.x;
          int y =parts[i]->pos.y;
 
-         if (cellGrid[x][y]->state ==1 ) {
+         if (cell->state ==1 ) {
              float r = ofRandom(1);
             
              parts[i]->feed();
            //   if( r < 0.1){
          //    addCell( calculateNewPos(x, y));
           //   }
-         }else if (cellGrid[x][y]->state ==2 ) {
+         }//else if (cellGrid[x][y]->state ==2 ) {
             // hunt(x,y,cellGrid);
-             parts[i]->feed();
+            // parts[i]->feed();
 
-         }
-     }
+         //}
+     }*/
 }
 
 void virusBody::hunt(int x, int y,vector<vector<Cell *> > cellGrid){
@@ -164,7 +227,7 @@ void virusBody::hunt(int x, int y,vector<vector<Cell *> > cellGrid){
         {
          //   for(int p = 0; p < parts.size(); p++){
             if(cellGrid[(x+i+cols)%cols][(y+j+rows)%rows]->state ==2 ){
-                addCell(ofVec2f((x+i+cols)%cols,(y+j+rows)%rows));
+         //       addCell(ofVec2f((x+i+cols)%cols,(y+j+rows)%rows));
                 
                 cout << "hunted";
          //   }
@@ -176,9 +239,26 @@ void virusBody::hunt(int x, int y,vector<vector<Cell *> > cellGrid){
     }
 }
 
+vector <ofVec2f*> virusBody::findPostions()
+{
+    positions.clear();
+    for (int i = 0; i < parts.size(); i++) {
+        for (int j = 0; j < parts[i].size(); j++) {
+            
+            if (parts[i][j]->state >= 0.1){
+                ofVec2f * position = new ofVec2f(i,j);
+                positions.push_back(position);
+            }
+        }
+    }
+    return positions;
+    positions.clear();
+}
 
 
+void virusBody::kill(ofVec2f * pos){
 
-
+    parts[pos->x][pos->y]->state = 0.0;
+}
 
 

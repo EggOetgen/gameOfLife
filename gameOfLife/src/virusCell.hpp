@@ -14,7 +14,7 @@
 class virusCell
     {
     public:
-        void setup(ofVec2f pos_, float size_, int state_, int id);
+        void setup(ofVec2f pos_, float size_, int state_, int id_);
         void display();
         void calculate();
         void aging();

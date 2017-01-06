@@ -67,8 +67,7 @@ void Cell::checkState(int neighbours, int hunters)
         else if (state == 1 && neighbours > 3)
                 state = 0;
         else if (state == 1 && hunters > 0){
-            float r = ofRandom(1);
-            if (r > 0.6) {
+                if (chance > 0.6) {
             state = 2;
             } else {
                 state = 1;
@@ -80,7 +79,7 @@ void Cell::checkState(int neighbours, int hunters)
         else if (state == 2 && neighbours >=2)
             state = 1;
        
-        else if(chance <=0.0000001)
+        else if(chance <=0.000001)
                 state = 2;
         else
             state = previous;

@@ -28,7 +28,7 @@ public:
     int cols;
     int rows;
     int width;
-   
+    int alive;
     
     
     
@@ -36,7 +36,8 @@ public:
     ofVec2f startPos;
  
     vector<vector<Cell*>> cellGrid;
-    vector<vector<virusBody*>> virusGrid;
+    virusBody virus;
+    
     
     
 

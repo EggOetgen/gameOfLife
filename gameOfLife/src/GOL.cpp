@@ -117,7 +117,8 @@ void GOL::generate()
             int y = ((int)virus.positions[i]->y + k + rows)% rows;
                 float r = ofRandom(1);
                 if( cellGrid[x][y]->state == 1){
-                    if (r >=0.9)
+                    cellGrid[x][y]->state == 0;
+                 //   if (r >=0.9)
                     virus.addCell(x, y);
                     
                 }else if( cellGrid[x][y]->state == 2){

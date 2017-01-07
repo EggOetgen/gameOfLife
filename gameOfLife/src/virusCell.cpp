@@ -48,7 +48,7 @@ void virusCell::aging()
     age = curTime - birth;
    // if (age >= 50){
    
-    state *= 0.99;
+    state *= 0.9;
     if (state <=0.1) {
         state = 0;
     }

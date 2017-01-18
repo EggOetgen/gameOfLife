@@ -15,23 +15,26 @@ class Cell {
 
 public:
     //METHOD;
-    void setup(float x_, float y_, float size_, int state_);
+    void setup(float x_, float y_, float size_, int state_, float lifeRate_);
     void display();
     void savePrevious();
     void checkState(int neighbors, int hunters);
-    void god(int mouseX, int mouseY);
-    
+        
     
     //VARIABLES
     float x;
     float y;
-    int size;
+    float size;
     int state;
     int previous;
+    
+    float lifeRate;
     
     ofColor alive;
     ofColor dead;
     ofColor prevColor;
+    
+    bool drawNorm;
     
 
     Cell();

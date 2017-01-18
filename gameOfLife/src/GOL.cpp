@@ -7,9 +7,6 @@
 //
 
 /*
- http://www.cplusplus.com/forum/general/107678/
- 
- http://www.gamedev.net/blog/844/entry-2249737-another-cellular-automaton-video/
 */
 
 #include "GOL.hpp"
@@ -19,28 +16,32 @@ GOL::GOL()
        
     }
 
-void GOL::setup(int width_)
-    {
+void GOL::setup(int width_, float virusStrength_, float lifeRate_)
+{
              
-        
+            //work out number of rows and columns of 2d vector
         cols = ofGetWidth()/width_;
         rows = ofGetWidth()/width_;
         width = width_;
         
+        virusStrength = virusStrength_;
+        lifeRate = lifeRate_;
         startPos.set(300,300);
         
         init();
+        
+        drawNorm = false;
        
     
-    }
+}
 
 void GOL::init()
-    {
+{
         
      
-
+            //set the cell grid vector size, not really necessary but just helps keep things in order
         cellGrid.resize(rows);
-                for(int i = 0; i < rows; i ++)
+        for(int i = 0; i < rows; i ++)
         {
             cellGrid[i].resize(cols);
           
@@ -53,21 +54,55 @@ void GOL::init()
                 
                 int state = (int)ofRandom(2);
                 Cell * newCell = new Cell;
-                newCell->setup(i * width, j * width, width, state);
+                newCell->setup(i * width, j * width, width, state, lifeRate);
                 cellGrid[i][j] = newCell;
-                
+                cellGrid[i][j]->drawNorm = drawNorm;
              
                
 
             }
         }
-         virus.setup(width, cols, rows, 0);
-    }
+         virus.setup(width, cols, rows);
+}
 
     
-
+//Where all the magic happens
 void GOL::generate()
-    {
+{
+        virus.grow();
+        virus.findPostions();
+       
+            //For every living part of the virus check if either a red squgily or normal cell is in adjacent space, if so eat it
+            for (int i = 0; i < virus.positions.size(); i++)
+            {
+                for(int j = -1; j <=1; j++)
+                {
+                    for(int k = -1; k <=1; k++)
+                    {
+                        int x = ((int)virus.positions[i]->x + j + cols)% cols;
+                        int y = ((int)virus.positions[i]->y + k + rows)% rows;
+                        float r = ofRandom(1);
+                        if( cellGrid[x][y]->state == 1)
+                        {
+                            if (r >=virusStrength)
+                            {
+                                virus.addCell(x, y);
+                            }
+                            
+                        } else if( cellGrid[x][y]->state == 2)
+                        {
+                            virus.addCell(x, y);
+                            
+                            cellGrid[x][y]->previous = 1;
+                            cellGrid[x][y]->state = 1;
+                        }
+                    }
+                }
+            }
+        
+        
+        
+        //based on Daniel Shifman's Game of Life implementation from The Nature of Code, counts each cells adjacent negihbors
         for(int x = 0; x < cellGrid.size(); x++)
         {
             for(int y = 0; y < cellGrid[x].size(); y++)
@@ -89,94 +124,43 @@ void GOL::generate()
                        
                     }
                 }
-                
                 neighbors -= cellGrid[x][y]->previous;
-                
                 cellGrid[x][y]->checkState(neighbors, hunters);
-               
             }
         }
-        virus.grow();
-        virus.findPostions();
-        
-               if(virus.positions.size() >=20000)
-            alive = 1;
-        else if(virus.positions.size() <9000)
-            alive = 0;
-        if (alive !=1) {
-          
-        
-        for (int i = 0; i < virus.positions.size(); i++){
-            
-          
-            for(int j = -1; j <=1; j++)
-        {
-                for(int k = -1; k <=1; k++)
-            {
-            int x = ((int)virus.positions[i]->x + j + cols)% cols;
-            int y = ((int)virus.positions[i]->y + k + rows)% rows;
-                float r = ofRandom(1);
-                if( cellGrid[x][y]->state == 1){
-                    cellGrid[x][y]->state == 0;
-                 //   if (r >=0.9)
-                    virus.addCell(x, y);
-                    
-                }else if( cellGrid[x][y]->state == 2){
-                     //if (r >=0.9)
-                 //   virus.kill(virus.positions[i]);
-                   // else
-                        virus.addCell(x, y);
-                    cellGrid[x][y]->state == 0;
-                }
- 
-        }
-        
-    }
-        }
-        }
-        
-
-        cout << virus.positions.size() << endl;
-    }
+}
 
 void GOL::display()
-    {
+{
         
         for(int i = 0; i < cellGrid.size(); i++)
         {
             for(int j = 0; j < cellGrid[i].size(); j++)
             {
                 cellGrid[i][j]->display();
-               
-
             }
         }
         virus.display();
-        virus.findPostions();
-       // cout << virus.positions.size() << endl;
-
-    }
-
-
-
-
-
-void GOL::addCell(int mouseX, int mouseY)
-    {
-        for(int i = 0; i < cellGrid.size(); i++)
-        {
-            for(int j = 0; j < cellGrid[i].size(); j++)
-        {
-            cellGrid[i][j]->god(mouseX, mouseY);
-        }
-    }
-    
 }
 
-void GOL::cycle()
+void GOL::clear()
+{
+    //delete everything
+    vector< vector<Cell *> >::iterator row;
+    vector<Cell *>::iterator col;
+    for (row = cellGrid.begin(); row != cellGrid.end(); row++)
     {
-
+        for (col = row->begin(); col != row->end(); )
+        {
+                delete * col;
+                col = row->erase(col);
+        }
     }
+    virus.clear();
+}
+
+
+
 
 
 

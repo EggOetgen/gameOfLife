@@ -8,35 +8,34 @@
 
 #include "virusCell.hpp"
 
-void virusCell::setup(ofVec2f pos_, float size_, int state_, int id_)
+void virusCell::setup(ofVec2f pos_, float size_, int state_)
 {
     pos     = pos_;
     size    = size_;
     state   = state_;
-    id = id_;
+   
+    birth = ofGetElapsedTimef();
+    
+    
     
     dead.g=1;
     dead.r = 0;
     dead.b=0;
-    birth = ofGetElapsedTimef();
+    
     
 }
-
 
 void virusCell::display()
 {
     if (state > 0.1){
-        dead.g = state;//ofMap(state, 0, 1, 0, 0.5);
-       // dead.b = ofMap(state, 0, 1, 255, 0);
-    
+        dead.g = state;
         
-      //  dead.b = (dead.b *= 10)%255;
+        dead.b = ofMap(age, 0, birth, 0.1, 1) ;
         ofSetColor(dead);
-
-    
-    
-        ofDrawRectangle(pos.x, pos.y, size, size);
-    
+        
+        
+        ofDrawCircle(pos.x, pos.y, size/2);
+       
     }
 }
 
@@ -44,12 +43,10 @@ void virusCell::aging()
 {
     
     int curTime = ofGetElapsedTimef();
-    
     age = curTime - birth;
-   // if (age >= 50){
    
     state *= 0.9;
-    if (state <=0.1) {
+    if (state <=0.4) {
         state = 0;
     }
 }

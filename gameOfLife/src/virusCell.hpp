@@ -14,20 +14,21 @@
 class virusCell
     {
     public:
-        void setup(ofVec2f pos_, float size_, int state_, int id_);
+        void setup(ofVec2f pos_, float size_, int state_);
         void display();
         void calculate();
         void aging();
         void feed();
-      //  void checkState(int neighbors, int hunters);
+     
         
         ofFloatColor dead;
         
         ofVec2f pos;
         
-        int size;
+        float size;
         float state;
-        int id;
+      
+       
         
         int birth;
         int age;

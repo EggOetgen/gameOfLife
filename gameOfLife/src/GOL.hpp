@@ -12,34 +12,33 @@
 #include "Cell.hpp"
 #include "virusCell.hpp"
 #include "virusBody.hpp"
+#include "math.h"
 
 class GOL {
     
 public:
     //METHOD;
-    void setup(int width_);
+    void setup(int width_, float virusStrength_, float lifeRate_);
     void init();
     void generate();
     void display();
-    void addCell(int x, int y);
-    void cycle();
-    
-    //VARIABLES
+    void clear();
+       //VARIABLES
     int cols;
     int rows;
-    int width;
-    int alive;
+    float width;
+    
+    float virusStrength;
+    float lifeRate;
     
     
-    
-    virusBody test;
+   
     ofVec2f startPos;
  
     vector<vector<Cell*>> cellGrid;
     virusBody virus;
     
-    
-    
+    bool drawNorm;
 
     
     GOL();

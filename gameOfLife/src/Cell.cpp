@@ -12,13 +12,16 @@ Cell::Cell(){
     
 }
 
-void Cell::setup(float x_, float y_, float size_, int state_)
+void Cell::setup(float x_, float y_, float size_, int state_, float lifeRate_)
     {
         x        = x_;
         y        = y_;
         size     = size_;
         state    = state_;
         previous = state;
+        lifeRate = lifeRate_;
+        
+        drawNorm = false;
         
         dead.r=255;
         dead.g = 0;
@@ -30,9 +33,11 @@ void Cell::display()
     {
       if (state ==1)
       {
-                    //ofSetColor(0);
+          if(drawNorm){
+        ofSetColor(0);
         
-       // ofDrawRectangle(x, y, size, size);
+        ofDrawRectangle(x, y, size, size);
+          }
       }
         else if (state ==2){
             
@@ -42,7 +47,7 @@ void Cell::display()
            dead.b = (dead.b *= 10)%255;
              ofSetColor(dead);
             
-            ofDrawRectangle(x, y, size, size);
+            ofDrawCircle(x, y, size/2);
         }
        
       
@@ -55,12 +60,13 @@ void Cell::savePrevious()
        
     }
 
+
 void Cell::checkState(int neighbours, int hunters)
     {
-        
+        //Normal rules for game of life but with added rules for red squigly
         
         float chance = ofRandom(1);
-             if (state == 1 && neighbours < 2)
+             if ((state == 1 && neighbours < 2 )|| (state == 1 && neighbours > 3))
              {
                      state = 0;
              }
@@ -69,31 +75,20 @@ void Cell::checkState(int neighbours, int hunters)
         else if (state == 1 && hunters > 0){
                 if (chance > 0.6) {
             state = 2;
-            } else {
-                state = 1;
-            }
+            } 
         }
         else if (state == 0 && neighbours == 3)
                 state = 1;
         
-        else if (state == 2 && neighbours >=2)
-            state = 1;
+   
        
-        else if(chance <=0.000001)
+        else if(chance <=lifeRate)
                 state = 2;
         else
             state = previous;
         
     }
-void Cell::god(int mouseX, int mouseY)
-    {
-        if (mouseX > x && mouseX < x + size
-            && mouseY > y && mouseY < y + size)
-        {
-            state = 2;
-            previous = 2;
-        }
-    }
+
 
 
 

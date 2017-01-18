@@ -24,6 +24,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
    
     int width;
+    float virusStrenth;
+    float lifeRate;
     
     
    

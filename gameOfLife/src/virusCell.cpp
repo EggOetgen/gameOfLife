@@ -19,8 +19,8 @@ void virusCell::setup(ofVec2f pos_, float size_, int state_)
     
     
     dead.g=1;
-    dead.r = 0;
-    dead.b=0;
+    dead.r = 1;
+    dead.b=1;
     
     
 }
@@ -28,13 +28,15 @@ void virusCell::setup(ofVec2f pos_, float size_, int state_)
 void virusCell::display()
 {
     if (state > 0.1){
-        dead.g = state;
+        dead.g = state*0.7;
+        dead.r = state*0.7;
+        dead.b = state*0.7;
         
-        dead.b = ofMap(age, 0, birth, 0.1, 1) ;
+       // dead.r = state/4;
         ofSetColor(dead);
         
         
-        ofDrawCircle(pos.x, pos.y, size/2);
+        ofDrawCircle(pos.x, pos.y, size);
        
     }
 }

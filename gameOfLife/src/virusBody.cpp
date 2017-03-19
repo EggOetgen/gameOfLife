@@ -46,6 +46,7 @@ void virusBody::init(){
     }
     int rx =(int)ofRandom(20,380);
     int ry =(int)ofRandom(20,380);
+    rx = ry =20;
     for (int i = 0; i < 360; i ++){
       
         int x = sin(ofDegToRad(i)) * 10+rx;
@@ -94,8 +95,8 @@ void virusBody::grow( )
             parts[positions[i]->x][positions[i]->y]->aging();
         
             }
-        /* this was meant to delete dead cells but would alter size of vector, left it in as could make things look cool but not very useful/efficient
-              
+       //  this was meant to delete dead cells but would alter size of vector, left it in as could make things look cool but not very useful/efficient
+      /*
      vector< vector<virusCell *> >::iterator row;
         vector<virusCell *>::iterator col;
         for (row = parts.begin(); row != parts.end(); row++) {
@@ -110,7 +111,8 @@ void virusBody::grow( )
                 }
 
             }
-        }*/
+        }
+        */
    
         
     }

@@ -23,7 +23,7 @@ void Cell::setup(float x_, float y_, float size_, int state_, float lifeRate_)
         
         drawNorm = false;
         
-        dead.r=255;
+        dead.r=80;
         dead.g = 0;
         dead.b=1;
         
@@ -41,8 +41,8 @@ void Cell::display()
       }
         else if (state ==2){
             
-            if(dead.r > 100)
-            dead.r *= 0.9999999999999;
+            if(dead.r > 20)
+            dead.r *= 0.999999999999;
            
            dead.b = (dead.b *= 10)%255;
              ofSetColor(dead);
